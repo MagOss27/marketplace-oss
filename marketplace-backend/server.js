@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Importação das rotas
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+// const paymentRoutes = require('./routes/paymentRoutes');
 
 // Usar as rotas
 app.use('/api/users', userRoutes);
