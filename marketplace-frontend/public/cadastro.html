@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <h2>Cadastro de Usuário</h2>
+    <form id="registerForm">
+        <input type="text" id="name" placeholder="Nome" required><br>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Senha" required><br>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        const backendUrl = 'https://marketplace-oss.onrender.com/';
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${backendUrl}/users/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                })
+            });
+            const data = await res.json();
+            alert(JSON.stringify(data));
+        });
+    </script>
+</body>
+</html>

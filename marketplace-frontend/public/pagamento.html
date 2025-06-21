@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamento Pix</title>
+</head>
+<body>
+    <h2>Gerar Link de Pagamento Pix</h2>
+    <form id="paymentForm">
+        <input type="number" id="amount" placeholder="Valor (R$)" required><br>
+        <button type="submit">Gerar Link</button>
+    </form>
+
+    <div id="pixLink"></div>
+
+    <script>
+        const backendUrl = 'https://marketplace-oss.onrender.com/';
+
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${backendUrl}/payments/pix`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: document.getElementById('amount').value
+                })
+            });
+            const data = await res.json();
+            document.getElementById('pixLink').innerHTML = `<a href="${data.link}" target="_blank">Link Pix</a>`;
+        });
+    </script>
+</body>
+</html>
