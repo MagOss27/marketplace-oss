@@ -12,3 +12,5 @@ const Home = () => (
     </nav>
   </div>
 );
+
+export default Home;
