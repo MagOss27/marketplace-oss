@@ -1,16 +1,18 @@
 {
   "name": "marketplace-frontend",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "echo 'Desenvolvimento local aqui'",
+    "build": "echo 'Sem build real, apenas mock'",
+    "start": "serve ./src"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
   }
 }
