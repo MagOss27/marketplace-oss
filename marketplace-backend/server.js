@@ -32,11 +32,13 @@ mongoose.connect(process.env.MONGO_URI, {
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 // Usar as rotas
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Rota raiz só pra teste
 app.get('/', (req, res) => {

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+// Middleware para proteger rotas (usuário autenticado)
 const protect = async (req, res, next) => {
     let token;
 
@@ -18,4 +19,24 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect };
+// Middleware para verificar se o usuário é admin
+function isAdmin(req, res, next) {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Acesso negado: apenas admins' });
+    }
+    next();
+}
+
+// Middleware genérico (não necessário se você usar protect)
+function authenticateToken(req, res, next) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
+
+module.exports = { protect, isAdmin, authenticateToken };
