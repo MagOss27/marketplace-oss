@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { createProduct, getAllProducts } = require('../controllers/productController');
-const { protect } = require('../middleware/authMiddleware');
+const Product = require('../models/Product');
+const { protect } = require('../middleware/auth');
 
-// Criar produto (precisa estar logado)
-router.post('/', protect, createProduct);
-
-// Listar produtos (público)
-router.get('/', getAllProducts);
+// ✅ Listar produtos do usuário logado
+router.get('/me', protect, async (req, res) => {
+  try {
+    const produtos = await Product.find({ owner: req.user.id });
+    res.json(produtos);
+  } catch (err) {
+    res.status(500).json({ message: 'Erro ao buscar produtos do usuário' });
+  }
+});
 
 module.exports = router;
