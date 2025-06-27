@@ -20,11 +20,6 @@ app.use(cors({
 // Middleware para receber JSON
 app.use(express.json());
 
-// Conexão com o MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI);
-.then(() => console.log('✅ Conectado ao MongoDB Atlas'))
-.catch((err) => console.error('❌ Erro ao conectar ao MongoDB:', err));
-
 // Importação das rotas
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -42,8 +37,23 @@ app.get('/', (req, res) => {
     res.send('🚀 API Marketplace rodando...');
 });
 
-// Porta do servidor
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
+// Função para conectar ao MongoDB e iniciar o servidor
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('✅ Conectado ao MongoDB Atlas');
+
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Erro ao conectar ao MongoDB:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
